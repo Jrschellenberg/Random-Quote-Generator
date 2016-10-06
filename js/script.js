@@ -1,16 +1,22 @@
+//This code executes the printQuote function every 10 seconds.
+var interval = setInterval(printQuote, 10* 1000);
+
 //Setting up a second array as a hardcopy not a reference.
 var secondQuoteArray = [];
 for(var i=0; i<quotes.length; i++){
     secondQuoteArray[i] = quotes[i];
 }
-// Returns a random integer between min (included) and max (included)
-// Using Math.round() will give you a non-uniform distribution!
-//Taking from the Mozilla Developer Website
+
+/* Returns a random integer between min (included) and max (included)
+  Using Math.round() will give you a non-uniform distribution!
+  Code Taken from the Mozilla Developer Website
+*/
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 // A function that takes the result from the GetRandomQuote() function
 function printQuote() {
     var theQuote = getRandomQuote();
@@ -36,6 +42,7 @@ function printQuote() {
     document.getElementById('quote-box').innerHTML = message;
 
 }
+
 /* A function that returns a random quote as a tempQuote.
   Removes the quotes randomly selected from the quotes array until non are left. Then repopulates the array with
   quotes.
@@ -60,15 +67,17 @@ function getRandomQuote(){
     //console.log(quotes.length);
     return tempQuote;
 }
+
+/*
+A function used to reset the Set interval timer back to 0 to not have quotes pass by too quickly.
+ */
+function resetTimer(){
+    console.log("got in here");
+    clearInterval(interval);
+    interval = setInterval(printQuote, 10* 1000);
+}
+
 // event listener to respond to "Show another quote" button clicks
 // when user clicks anywhere on the button, the "printQuote" function is called
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
-
-//This code executes the printQuote function every 10 seconds.
-setInterval(printQuote, 10* 1000);
-
-
-
-
-
-
+document.getElementById('loadQuote').addEventListener("click", resetTimer, false);
